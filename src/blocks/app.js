@@ -34,7 +34,7 @@ class App extends React.Component {
 
     render() {
         return (
-            <div className='mai n-page'>
+            <div className='main-page'>
                 {this.state.isDataFetch ?
                     (<h1>Идет загрузка данных...</h1>):
                     this.state.isErrorLoad ?
