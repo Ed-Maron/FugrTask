@@ -4,9 +4,7 @@ export default class ActiveUser extends React.Component {
     render() {
         const { activeUser } = this.props;
         return (
-
             <div className="user-info">
-
                 <div className="selected-user">
                     <h3>Выбран пользователь: <i>{activeUser.firstName} {activeUser.lastName}</i></h3>
 
