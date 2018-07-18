@@ -23,7 +23,8 @@ class UserList extends React.Component {
     }
 
     render() {
-        let users = this.state.users.map( item =>
+
+        let users = (this.props.isSelectedUser ? this.props.selectedUser : this.state.users).map( item =>
             <tr key={item.id.toString()} onClick={ () => {this.props.setActiveUser(item.id)} }>
                 <td>{item.id}</td>
                 <td>{item.firstName}</td>

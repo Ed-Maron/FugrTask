@@ -1,6 +1,7 @@
 import React from 'react';
 import UserList from './userList'
 import ActiveUser from  './activeUser'
+import Search from  './search'
 
 class App extends React.Component {
     constructor(props){
@@ -8,6 +9,8 @@ class App extends React.Component {
         this.state = {
             activeUser: {},
             users: [],
+            selectedUser: [],
+            isSelectedUser: false,
             isDataFetch: true,
             isErrorLoad: false,
             errorDescription: ""
@@ -18,6 +21,22 @@ class App extends React.Component {
         this.setState({
             activeUser: this.state.users.find(item => item.id === key)
         })
+    }
+
+    findUser(name) {
+        //console.log(name, this.state.isSelectedUser);
+        //console.log(this.state);
+        document.thisPage = this;
+        this.setState({isSelectedUser: true}, this.selectedUserCallback);
+        //console.log(name, this.state.isSelectedUser);
+
+    }
+
+    selectedUserCallback() {
+        window.console.log(this.state);
+        this.state.isSelectedUser ? (this.setState({selectedUser: this.state.users.find(item => item.firstName === name)}))
+            : (this.setState({selectedUser: this.state.users, isSelectedUser: false}));
+        window.console.log(this.state);
     }
 
     async componentDidMount() {
@@ -34,14 +53,17 @@ class App extends React.Component {
 
     render() {
         return (
-            <div className='main-page'>
-                {this.state.isDataFetch ?
-                    (<h1>Идет загрузка данных...</h1>):
-                    this.state.isErrorLoad ?
-                        (<h1>{this.state.errorDescription}</h1>):
-                        (<UserList users={this.state.users} isDataFetch={this.state.isDataFetch} setActiveUser={this.setActiveUser.bind(this)}/>)
-                }
-                {this.state.activeUser.id ? (<ActiveUser activeUser={this.state.activeUser}/>) : false}
+            <div>
+                <Search findUser={this.findUser.bind(this)}/>
+                <div className='main-page'>
+                    {this.state.isDataFetch ?
+                        (<h1>Идет загрузка данных...</h1>):
+                        this.state.isErrorLoad ?
+                            (<h1>{this.state.errorDescription}</h1>):
+                            (<UserList users={this.state.users} isDataFetch={this.state.isDataFetch} setActiveUser={this.setActiveUser.bind(this)}/>)
+                    }
+                    {this.state.activeUser.id ? (<ActiveUser activeUser={this.state.activeUser}/>) : false}
+                </div>
             </div>
         )
     }
